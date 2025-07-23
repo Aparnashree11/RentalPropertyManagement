@@ -6,46 +6,31 @@ import java.util.Set;
 
 @Entity
 public class LeaseAgreement {
-        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
 
-        private LocalDate startDate;
-        private LocalDate endDate;
-        private Double monthlyRent;
-
         @ManyToOne
+        @JoinColumn(name = "property_id")
         private Property property;
 
-        @ManyToOne
-        private Tenant tenant;
+        private String tenant;
+        private String owner;
 
-        @OneToMany(mappedBy = "leaseAgreement")
-        private Set<Payment> payments;
+        private String status;
+
+        private LocalDate leaseStartDate;
+        private LocalDate leaseEndDate;
+
 
         // Getters & Setters
 
-        public LocalDate getStartDate() {
-                return startDate;
+        public Long getId() {
+                return id;
         }
 
-        public void setStartDate(LocalDate startDate) {
-                this.startDate = startDate;
-        }
-
-        public LocalDate getEndDate() {
-                return endDate;
-        }
-
-        public void setEndDate(LocalDate endDate) {
-                this.endDate = endDate;
-        }
-
-        public Double getMonthlyRent() {
-                return monthlyRent;
-        }
-
-        public void setMonthlyRent(Double monthlyRent) {
-                this.monthlyRent = monthlyRent;
+        public void setId(Long id) {
+                this.id = id;
         }
 
         public Property getProperty() {
@@ -56,27 +41,43 @@ public class LeaseAgreement {
                 this.property = property;
         }
 
-        public Tenant getTenant() {
+        public String getTenant() {
                 return tenant;
         }
 
-        public void setTenant(Tenant tenant) {
-                this.tenant = tenant;
+        public void setTenant(String tenantName) {
+                this.tenant = tenantName;
         }
 
-        public Set<Payment> getPayments() {
-                return payments;
+        public String getOwner() {
+                return owner;
         }
 
-        public void setPayments(Set<Payment> payments) {
-                this.payments = payments;
+        public void setOwner(String ownerName) {
+                this.owner = ownerName;
         }
 
-        public Long getId() {
-                return id;
+        public LocalDate getLeaseStartDate() {
+                return leaseStartDate;
         }
 
-        public void setId(Long id) {
-                this.id = id;
+        public void setLeaseStartDate(LocalDate leaseStartDate) {
+                this.leaseStartDate = leaseStartDate;
         }
+
+        public LocalDate getLeaseEndDate() {
+                return leaseEndDate;
+        }
+
+        public void setLeaseEndDate(LocalDate leaseEndDate) {
+                this.leaseEndDate = leaseEndDate;
+        }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

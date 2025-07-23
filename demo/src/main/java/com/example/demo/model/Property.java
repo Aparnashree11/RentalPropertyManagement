@@ -11,12 +11,9 @@ public class Property {
     private String name;
     private String address;
     private Double rent;
+    private String description;
 
-    @ManyToOne
-    private User owner;
-
-    @OneToMany(mappedBy = "property")
-    private Set<LeaseAgreement> leases;
+    private String owner;
 
     // Getters & Setters
 
@@ -52,19 +49,19 @@ public class Property {
         this.rent = rent;
     }
 
-    public User getOwner() {
+    public String getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(String owner) {
         this.owner = owner;
     }
 
-    public Set<LeaseAgreement> getLeases() {
-        return leases;
+    public String getDescription() {
+        return description;
     }
 
-    public void setLeases(Set<LeaseAgreement> leases) {
-        this.leases = leases;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

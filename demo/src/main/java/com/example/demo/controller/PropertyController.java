@@ -13,8 +13,13 @@ public class PropertyController {
     @Autowired
     private PropertyService propertyService;
 
+    @GetMapping("/{username}")
+    public List<Property> getProperties(@PathVariable String username) {
+        return propertyService.getProperties(username);
+    }
+
     @GetMapping
-    public List<Property> getProperties() {
+    public List<Property> getAllProperties() {
         return propertyService.getAllProperties();
     }
 
@@ -26,5 +31,10 @@ public class PropertyController {
     @DeleteMapping("/{id}")
     public void deleteProperty(@PathVariable Long id) {
         propertyService.deleteProperty(id);
+    }
+
+    @PutMapping("/{id}")
+    public void updateProperty(@PathVariable Long id, @RequestBody Property updatedProperty) {
+        propertyService.updateProperty(id, updatedProperty);
     }
 }

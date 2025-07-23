@@ -4,10 +4,12 @@ import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -20,6 +22,9 @@ public class AuthController {
 
     @PostMapping("/register")
     public String register(@RequestBody User user) {
+        if (userRepo.findByUsername(user.getUsername())!=null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User already exists");
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepo.save(user);
         return "User registered successfully";
@@ -33,4 +38,5 @@ public class AuthController {
         User user = userRepo.findByUsername(loginRequest.getUsername());
         return jwtProvider.generateToken(loginRequest.getUsername(), user.getRole());
     }
+
 }
